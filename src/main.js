@@ -5,8 +5,6 @@ import Vue from 'vue'
 import App from './App'
 // store
 import store from '@/store/index'
-// 模拟数据
-import '@/mock'
 // 多国语
 import i18n from './i18n'
 // 核心插件
@@ -59,14 +57,12 @@ new Vue({
   mounted () {
     // 展示系统信息
     this.$store.commit('d2admin/releases/versionShow')
-    // 检查最新版本
-    this.$store.dispatch('d2admin/releases/checkUpdate')
     // 用户登录后从数据库加载一系列的设置
-    this.$store.commit('d2admin/account/load')
+    this.$store.dispatch('d2admin/account/load')
     // 获取并记录用户 UA
     this.$store.commit('d2admin/ua/get')
     // 初始化全屏监听
-    this.$store.commit('d2admin/fullscreen/listen')
+    this.$store.dispatch('d2admin/fullscreen/listen')
   },
   watch: {
     // 监听路由 控制侧边栏显示

@@ -15,7 +15,7 @@
       <d2-highlight :code="code"/>
     </el-card>
     <template slot="footer">
-      <d2-link-btn title="文档" link="http://app.d3collection.cn/d2-admin-doc/lastest/zh/ecosystem-d2-crud/"/>
+      <d2-link-btn title="文档" link="https://doc.d2admin.fairyever.com/zh/ecosystem-d2-crud/"/>
     </template>
   </d2-container>
 </template>
@@ -78,7 +78,7 @@ export default {
     }
   },
   methods: {
-    handleCustomEvent ({index, row}) {
+    handleCustomEvent ({ index, row }) {
       console.log(index)
       console.log(row)
     }

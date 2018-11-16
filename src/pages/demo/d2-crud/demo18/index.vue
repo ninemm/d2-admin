@@ -15,7 +15,7 @@
       <d2-highlight :code="code"/>
     </el-card>
     <template slot="footer">
-      <d2-link-btn title="文档" link="http://app.d3collection.cn/d2-admin-doc/lastest/zh/ecosystem-d2-crud/"/>
+      <d2-link-btn title="文档" link="https://doc.d2admin.fairyever.com/zh/ecosystem-d2-crud/"/>
     </template>
   </d2-container>
 </template>
@@ -47,22 +47,30 @@ export default {
         {
           date: '2016-05-02',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
+          address: '上海市普陀区金沙江路 1518 弄',
+          forbidRemove: true,
+          showRemoveButton: true
         },
         {
           date: '2016-05-04',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
+          address: '上海市普陀区金沙江路 1517 弄',
+          forbidRemove: false,
+          showRemoveButton: true
         },
         {
           date: '2016-05-01',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
+          address: '上海市普陀区金沙江路 1519 弄',
+          forbidRemove: false,
+          showRemoveButton: false
         },
         {
           date: '2016-05-03',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          address: '上海市普陀区金沙江路 1516 弄',
+          forbidRemove: false,
+          showRemoveButton: true
         }
       ],
       rowHandle: {
@@ -70,13 +78,25 @@ export default {
           icon: 'el-icon-delete',
           size: 'small',
           fixed: 'right',
-          confirm: true
+          confirm: true,
+          show (index, row) {
+            if (row.showRemoveButton) {
+              return true
+            }
+            return false
+          },
+          disabled (index, row) {
+            if (row.forbidRemove) {
+              return true
+            }
+            return false
+          }
         }
       }
     }
   },
   methods: {
-    handleRowRemove ({index, row}, done) {
+    handleRowRemove ({ index, row }, done) {
       setTimeout(() => {
         console.log(index)
         console.log(row)

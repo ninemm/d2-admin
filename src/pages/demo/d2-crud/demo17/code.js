@@ -4,9 +4,11 @@ export default `<template>
       :columns="columns"
       :data="data"
       title="D2 CRUD"
+      add-mode
       :rowHandle="rowHandle"
       :form-template="formTemplate"
       :form-options="formOptions"
+      @row-add="handleRowAdd"
       @row-edit="handleRowEdit"
       @dialog-cancel="handleDialogCancel"/>
   </div>
@@ -34,22 +36,30 @@ export default {
         {
           date: '2016-05-02',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
+          address: '上海市普陀区金沙江路 1518 弄',
+          forbidEdit: true,
+          showEditButton: true
         },
         {
           date: '2016-05-04',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
+          address: '上海市普陀区金沙江路 1517 弄',
+          forbidEdit: false,
+          showEditButton: true
         },
         {
           date: '2016-05-01',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
+          address: '上海市普陀区金沙江路 1519 弄',
+          forbidEdit: false,
+          showEditButton: false
         },
         {
           date: '2016-05-03',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
+          address: '上海市普陀区金沙江路 1516 弄',
+          forbidEdit: false,
+          showEditButton: true
         }
       ],
       rowHandle: {
@@ -58,7 +68,18 @@ export default {
           icon: 'el-icon-edit',
           text: '点我进行编辑',
           size: 'small',
-          fixed: 'right'
+          show (index, row) {
+            if (row.showEditButton) {
+              return true
+            }
+            return false
+          },
+          disabled (index, row) {
+            if (row.forbidEdit) {
+              return true
+            }
+            return false
+          }
         }
       },
       formTemplate: {
@@ -73,6 +94,20 @@ export default {
         address: {
           title: '地址',
           value: ''
+        },
+        forbidEdit: {
+          title: '禁用按钮',
+          value: false,
+          component: {
+            show: false
+          }
+        },
+        showEditButton: {
+          title: '显示按钮',
+          value: true,
+          component: {
+            show: false
+          }
         }
       },
       formOptions: {
@@ -83,6 +118,18 @@ export default {
     }
   },
   methods: {
+    handleRowAdd (row, done) {
+      this.formOptions.saveLoading = true
+      setTimeout(() => {
+        console.log(row)
+        this.$message({
+          message: '保存成功',
+          type: 'success'
+        })
+        done()
+        this.formOptions.saveLoading = false
+      }, 300)
+    },
     handleRowEdit ({index, row}, done) {
       this.formOptions.saveLoading = true
       setTimeout(() => {
